@@ -1,7 +1,8 @@
 [
   {
     "id": 1,
-    "task": "hello world",
-    "done": false
+    "task": "buy milk",
+    "done": false,
+    "priority": "high"
   }
 ]

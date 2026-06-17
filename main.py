@@ -20,6 +20,7 @@ parser.add_argument("task", type=str, nargs="?", help="Task to add")
 parser.add_argument("-c", "--complete", type=int, help="Mark a task as complete by ID")
 parser.add_argument("-d", "--delete", type=int, help="Delete a task by ID")
 parser.add_argument("-l", "--list", help="List all tasks", action="store_true")
+parser.add_argument("-p", "--priority", choices=["low","medium","high"], default="medium", help="choose one the priorites of a task (low medium or high)")
 args = parser.parse_args()
 
 if len(sys.argv) == 1:
@@ -30,7 +31,7 @@ if args.list:
     tasks = load_tasks()
     for task in tasks:
         status = "x" if task["done"] else " "
-        print(f"[{status}] {task['id']}: {task['task']}")
+        print(f"[{status}] {task['id']}: {task['task']}({task['priority']})")
     sys.exit(0)
 elif args.complete:
     tasks = load_tasks()
@@ -55,6 +56,6 @@ elif args.task:
         new_id = 1
     else:
         new_id = tasks[-1]["id"] + 1
-    tasks.append({"id": new_id, "task": args.task, "done": False})
+    tasks.append({"id": new_id, "task": args.task, "done": False, "priority": args.priority})
     save_task(tasks)
     print(f"Task {args.task} added with ID of {new_id}")
